@@ -55,7 +55,7 @@ export function useMutate(): useMutateResponse {
 
     const removeProduct =  (id: number) => {
         Product.removeOne(id)
-            .then((res) => {
+            .then(() => {
                 dispatch(removeOneProduct(id))
             })
     }
