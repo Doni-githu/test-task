@@ -37,7 +37,7 @@ const AddProduct = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submit, error)}>
+        <form className='w-50 mx-auto text-center' onSubmit={handleSubmit(submit, error)}>
             <div className="form-floating">
                 <input type="text" className={`form-control ${errors.title?.message ? 'is-invalid' : ''}`} id='username' {...register('title', { required: true })} />
                 <label htmlFor="username">Title: </label>
