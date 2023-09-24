@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct, IUser } from '../types';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
     isAuth: boolean;

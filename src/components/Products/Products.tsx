@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react'
 import { useQuery } from '../../hooks'
-import { useAppDispatch } from '../../store'
-import { setProducts } from '../../reducers/product'
-import Product from '../../controllers/product'
+import { useAppSelector } from '../../store'
+import Item from '../Item/Item'
 const Products = () => {
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        Product.getAll()
-            .then((res) => {
-                dispatch(setProducts(res.data))
-                console.log(res.data);
-            })
-    }, [])
-
+    useQuery({ howMany: 'many' })
+    const products = useAppSelector((state) => state.product.products)
 
     return (
-        <h1>All</h1>
+        <>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {products.map((item) => (
+                    <Item key={item.id} product={item} />
+                ))}
+            </div>
+        </>
     )
 }
 
 export default Products
-
-function dispatch(arg0: { payload: import("../../types").IProduct[]; type: "product/setProducts" }) {
-    throw new Error('Function not implemented.')
-}

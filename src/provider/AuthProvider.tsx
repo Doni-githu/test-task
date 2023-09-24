@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     useEffect(() => {
         if (!cookies.token) {
             navigate('/login', { replace: true })
-        } else {
+        } else {            
             dispatch(successLogin())
         }
     }, [])

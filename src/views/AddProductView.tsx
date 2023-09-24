@@ -1,7 +1,8 @@
+import AddProduct from "../components/AddProduct/AddProduct"
 
 const AddProductView = () => {
   return (
-    <div>AddProductView</div>
+    <AddProduct />
   )
 }
 

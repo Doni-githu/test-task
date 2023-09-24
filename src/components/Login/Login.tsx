@@ -1,4 +1,4 @@
-import React from 'react'
+import {useEffect} from 'react'
 import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
 import { ILoginData } from '../../types'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -25,6 +25,11 @@ const Login = () => {
         },
         resolver: yupResolver(schame)
     })
+    useEffect(() => {
+        if(cookies.token){
+            navigate(-1)
+        }        
+    }, [])
 
     const submit: SubmitHandler<ILoginData> = async (data: ILoginData) => {
         dispatch(startLogin())
