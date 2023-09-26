@@ -30,7 +30,7 @@ const EditProduct = () => {
     })
 
     const navigate = useNavigate()
-    const { updateProduct } = useMutate()
+    const { click } = useMutate()
     const { register, handleSubmit, formState: { errors } } = useForm<MyFormData>({
         defaultValues: {
             title: product?.title,
@@ -43,7 +43,7 @@ const EditProduct = () => {
     })
 
     const submit: SubmitHandler<MyFormData> = async (data: MyFormData) => {
-        updateProduct(id, data)
+        click({ id, data, method: 'PUT'})
         navigate('/')
     }
 

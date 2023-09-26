@@ -7,7 +7,7 @@ interface ItemProps {
     product: IProduct
 }
 const Item = ({ product }: ItemProps) => {
-    const { removeProduct } = useMutate()
+    const { click } = useMutate()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     return <>
@@ -28,7 +28,7 @@ const Item = ({ product }: ItemProps) => {
                             navigate("/" + product.id)
                         }}>Detail</button>
                         <button className='btn btn-danger' onClick={() => {
-                            removeProduct(product.id)
+                            click({ id: product.id, method: 'DELETE' })
                         }}>Delete</button>
                         <button className='btn btn-success' onClick={() => {
                             dispatch(setProduct(product))

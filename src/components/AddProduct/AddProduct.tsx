@@ -14,25 +14,22 @@ const schame = yup.object({
     image: yup.string().required("Image is required"),
     category: yup.string().required("Category is required"),
 })
-
-interface MyFormData extends Omit<IProduct, "id" | "rating"> {
-
-}
+type MyType = Omit<IProduct, "id" | "rating">
 
 const AddProduct = () => {
     const navigate = useNavigate()
-    const { addProduct } = useMutate()
-    const { register, handleSubmit, formState: { errors } } = useForm<MyFormData>({
+    const { click } = useMutate()
+    const { register, handleSubmit, formState: { errors } } = useForm<MyType>({
         defaultValues: {},
         resolver: yupResolver(schame)
     })
 
-    const submit: SubmitHandler<MyFormData> = async (data: MyFormData) => {
-        addProduct(data)
+    const submit: SubmitHandler<MyType> = async (data: MyType) => {
+        click({ data: data, method: 'POST' })
         navigate('/')
     }
 
-    const error: SubmitErrorHandler<MyFormData> = (data) => {
+    const error: SubmitErrorHandler<MyType> = (data) => {
         console.log(data);
     }
 

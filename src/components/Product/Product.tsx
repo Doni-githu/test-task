@@ -9,6 +9,7 @@ const Product = () => {
         howMany: 'one',
         id
     })
+
     const product = useAppSelector((state) => state.product.product)
     return (
         <>
