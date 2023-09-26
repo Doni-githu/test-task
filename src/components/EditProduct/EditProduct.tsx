@@ -3,10 +3,10 @@ import { IProduct } from '../../types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useNavigate, useParams } from "react-router-dom"
-import { useMutate, useQuery } from '../../hooks'
-import { useAppSelector } from "../../store"
-
-
+import { useEffect } from 'react'
+import { useMutate } from '../../hooks/useMutate'
+import { useProduct } from '../../hooks/useProduct'
+import { useAppSelector } from '../../store'
 
 const schame = yup.object({
     title: yup.string().required("Title is required"),
@@ -21,29 +21,35 @@ interface MyFormData extends Omit<IProduct, "id" | "rating"> {
 }
 const EditProduct = () => {
     const params = useParams()
-    const product = useAppSelector((state) => state.product.product)
     const id = Number(params.id)
 
-    useQuery({
-        howMany: 'one',
-        id: id
-    })
-
+    useProduct(id)
+    const product = useAppSelector(state => state.product.product)
+    
     const navigate = useNavigate()
     const { click } = useMutate()
-    const { register, handleSubmit, formState: { errors } } = useForm<MyFormData>({
-        defaultValues: {
-            title: product?.title,
-            description: product?.description,
-            price: product?.price,
-            image: product?.image,
-            category: product?.category
-        },
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<MyFormData>({
+        defaultValues: {},
         resolver: yupResolver(schame)
     })
 
+
+    useEffect(() => {
+        if (product) {
+            setValue('title', product.title)
+            setValue('price', product.price)
+            setValue('image', product.image)
+            setValue('description', product.description)
+            setValue('category', product.category)
+        }
+    }, [])
+
     const submit: SubmitHandler<MyFormData> = async (data: MyFormData) => {
-        click({ id, data, method: 'PUT'})
+        click({
+            method: 'PUT',
+            data: data,
+            id
+        })
         navigate('/')
     }
 
@@ -52,7 +58,7 @@ const EditProduct = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(submit, error)}>
+        <form className='w-50 mx-auto text-center' onSubmit={handleSubmit(submit, error)}>
             <div className="form-floating">
                 <input type="text" className={`form-control ${errors.title?.message ? 'is-invalid' : ''}`} id='username' {...register('title', { required: true })} />
                 <label htmlFor="username">Title: </label>

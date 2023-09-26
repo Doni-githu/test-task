@@ -3,7 +3,7 @@ import { IProduct } from '../../types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useNavigate } from "react-router-dom"
-import { useMutate } from '../../hooks'
+import { usePostProduct } from '../../hooks/usePostProduct'
 
 
 
@@ -18,14 +18,15 @@ type MyType = Omit<IProduct, "id" | "rating">
 
 const AddProduct = () => {
     const navigate = useNavigate()
-    const { click } = useMutate()
+    const { mutate } = usePostProduct()
     const { register, handleSubmit, formState: { errors } } = useForm<MyType>({
         defaultValues: {},
         resolver: yupResolver(schame)
     })
 
-    const submit: SubmitHandler<MyType> = async (data: MyType) => {
-        click({ data: data, method: 'POST' })
+    const submit: SubmitHandler<MyType> = async (data2: MyType) => {
+        mutate(data2)
+        
         navigate('/')
     }
 

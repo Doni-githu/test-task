@@ -1,5 +1,5 @@
 import { IProduct } from '../../types'
-import { useMutate } from '../../hooks'
+import { useMutate } from '../../hooks/useMutate'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setProduct } from '../../reducers/product'

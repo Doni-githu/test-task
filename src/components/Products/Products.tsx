@@ -1,14 +1,19 @@
-import { useQuery } from '../../hooks'
+import { useProducts } from '../../hooks/useProducts'
 import { useAppSelector } from '../../store'
 import Item from '../Item/Item'
+import Loader from '../ui/Loader'
+
 const Products = () => {
-    useQuery({ howMany: 'many' })
-    const products = useAppSelector((state) => state.product.products)
+    const { isFetching } = useProducts()
+    const products = useAppSelector(state => state.product.products)
+    if (isFetching) {
+        return <Loader />
+    }
 
     return (
         <>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {products.map((item) => (
+                {products && products.map((item) => (
                     <Item key={item.id} product={item} />
                 ))}
             </div>
