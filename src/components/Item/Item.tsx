@@ -1,15 +1,15 @@
 import { IProduct } from '../../types'
-import { useMutate } from '../../hooks/useMutate'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setProduct } from '../../reducers/product'
+import { useDeleteProduct } from '../../hooks/useDeleteProduct'
 interface ItemProps {
     product: IProduct
 }
 const Item = ({ product }: ItemProps) => {
-    const { click } = useMutate()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { mutate } = useDeleteProduct()
     return <>
         <div className="col">
             <div className="card shadow-sm">
@@ -28,7 +28,7 @@ const Item = ({ product }: ItemProps) => {
                             navigate("/" + product.id)
                         }}>Detail</button>
                         <button className='btn btn-danger' onClick={() => {
-                            click({ id: product.id, method: 'DELETE' })
+                            mutate(product.id)
                         }}>Delete</button>
                         <button className='btn btn-success' onClick={() => {
                             dispatch(setProduct(product))

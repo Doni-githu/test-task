@@ -4,9 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect } from 'react'
-import { useMutate } from '../../hooks/useMutate'
 import { useProduct } from '../../hooks/useProduct'
 import { useAppSelector } from '../../store'
+import { usePutProduct } from '../../hooks/usePutProduct'
 
 const schame = yup.object({
     title: yup.string().required("Title is required"),
@@ -27,7 +27,7 @@ const EditProduct = () => {
     const product = useAppSelector(state => state.product.product)
     
     const navigate = useNavigate()
-    const { click } = useMutate()
+    const {mutate} = usePutProduct() 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<MyFormData>({
         defaultValues: {},
         resolver: yupResolver(schame)
@@ -45,9 +45,8 @@ const EditProduct = () => {
     }, [])
 
     const submit: SubmitHandler<MyFormData> = async (data: MyFormData) => {
-        click({
-            method: 'PUT',
-            data: data,
+        mutate({
+            data,
             id
         })
         navigate('/')

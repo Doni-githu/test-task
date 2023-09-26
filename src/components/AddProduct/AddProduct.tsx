@@ -26,7 +26,6 @@ const AddProduct = () => {
 
     const submit: SubmitHandler<MyType> = async (data2: MyType) => {
         mutate(data2)
-        
         navigate('/')
     }
 
