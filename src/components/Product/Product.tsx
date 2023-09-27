@@ -1,13 +1,12 @@
 import { useProduct } from '../../hooks/useProduct'
 import { useParams } from 'react-router-dom'
 import Loader from '../ui/Loader'
-import { useAppSelector } from '../../store'
 
 const Product = () => {
     const params = useParams()
     const id = Number(params.id)
-    const {isFetching} = useProduct(id)
-    const product = useAppSelector((state) => state.product.product)
+    const {isFetching, data} = useProduct(id)
+    let product = data
     if (isFetching && !product) {
         return <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '5rem' }}>
             <Loader />

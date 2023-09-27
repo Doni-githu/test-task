@@ -1,4 +1,4 @@
-import { UseMutationResult, useMutation} from "@tanstack/react-query"
+import { UseMutationResult, useMutation } from "@tanstack/react-query"
 import { CreatingProduct, IProduct } from "../types"
 import Product from "../controllers/product"
 import { AxiosResponse } from "axios"
